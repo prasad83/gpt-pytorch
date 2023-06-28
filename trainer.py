@@ -6,7 +6,7 @@ import torch
 import torch.nn as nn
 from torch.nn.parallel import DistributedDataParallel
 from torch.utils.tensorboard import SummaryWriter
-from radam import RAdam
+import RAdam
 
 from model import GPT, GPTLMHead, GPTClsHead
 
