@@ -5,6 +5,7 @@ import json
 import torch
 import torch.distributed as dist
 from torch.utils.data import TensorDataset
+from tqdm import tqdm
 
 class PretrainInputExample:
     """A single example for unsupervised pre-training.
@@ -53,7 +54,7 @@ def convert_examples_to_features(examples,
 
     # Create features
     features = []
-    for i, example in enumerate(examples):
+    for i, example in enumerate(tqdm(examples)):
         tokens = tokenizer.tokenize(example.text)
         tokens = [bos_token] + tokens[:args.max_seq_len-2] + [eos_token] # BOS, EOS
         tokens += [pad_token] * (args.max_seq_len - len(tokens))
