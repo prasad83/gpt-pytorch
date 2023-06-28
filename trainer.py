@@ -101,7 +101,7 @@ class Trainer:
 
             if self.args.local_rank in [-1, 0]:
                 self.writer.add_scalar('Loss/pre-train', loss.item(), ((epoch-1)*n_batches)+i)
-                if n_batches > 5 && i % (n_batches//5) == 0 and i != 0:
+                if n_batches > 5 and i % (n_batches//5) == 0 and i != 0:
                     print('Iteration {} ({}/{})\tLoss: {:.4f}'.format(i, i, n_batches, losses/i))
         
         print('Train Epoch {} [rank: {}]\t>\tLoss: {:.4f}'.format(epoch, self.args.local_rank, losses/n_batches))
@@ -134,7 +134,7 @@ class Trainer:
             if self.args.local_rank in [-1, 0]:
                 self.writer.add_scalar('Loss/fine-tune', loss.item(), ((epoch-1)*n_batches)+i)
                 self.writer.add_scalar('Accuracy/fine-tune', acc, ((epoch-1)*n_batches)+i)
-                if i % (n_batches//5) == 0 and i != 0:
+                if n_batches > 5 and i % (n_batches//5) == 0 and i != 0:
                     print('Iteration {} ({}/{})\tLoss: {:.4f} Acc: {:.1f}%'.format(i, i, n_batches, losses/i, accs/i*100.))
 
         print('Train Epoch {} [rank: {}]\t>\tLoss: {:.4f} / Acc: {:.1f}%'.format(epoch, self.args.local_rank, losses/n_batches, accs/n_batches*100.))
