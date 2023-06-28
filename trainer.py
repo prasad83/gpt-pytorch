@@ -36,7 +36,7 @@ class Trainer:
         self.vocab_size = tokenizer.vocab_size
         self.pad_id = tokenizer.pad_token_id
         self.eos_id = tokenizer.eos_token_id
-        self.device = torch.device('cuda' if torch.cuda.is_available() and not args.no_cuda else 'cpu', args.local_rank)
+        self.device = torch.device('cuda' if torch.cuda.is_available() and not args.no_cuda else 'cpu', max(0, args.local_rank))
         self.writer = SummaryWriter() if args.local_rank in [-1, 0] else None
         self.n_gpus = torch.distributed.get_world_size() if args.distributed else torch.cuda.device_count()
         assert args.pretrain != args.finetune # Do not set both finetune and pretrain arguments to the same (True, False)
